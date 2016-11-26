@@ -19,9 +19,6 @@ module Game{
             if (this.enemyList.length < this.max_spawn) {
                 this.trySpawn();
             }
-            
-            console.log(this.enemyList.length)
-
             for (let i = 0; i < this.enemyList.length; i++) {
                 if (this.enemyList[i].getSprite().alive == false) {
                     this.enemyList.splice(i, 1);
