@@ -1,10 +1,22 @@
-class SimpleGame {
+class Main {
+
+    public scalingFactors: [number, number]
+    public game: Phaser.Game
+
+    private wantedGameWidth = 1920
+    private wantedGameHeight = 1080
+
 
     constructor() {
-        this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'content', { preload: this.preload, create: this.create });
-    }
+        var gameWidth = window.innerWidth
+        var gameHeight = window.innerHeight
+        
+        this.scalingFactors = [gameWidth / this.wantedGameWidth, gameHeight / this.wantedGameHeight]
 
-    game: Phaser.Game;
+        this.game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'gameDiv');
+
+
+    }
 
     preload() {
         this.game.load.image('logo', 'phaser2.png');
@@ -19,6 +31,6 @@ class SimpleGame {
 
 window.onload = () => {
 
-    var game = new SimpleGame();
+    var main = new Main();
 
 };
