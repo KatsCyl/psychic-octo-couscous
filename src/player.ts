@@ -20,6 +20,7 @@ module Game {
             game.physics.arcade.enableBody(this.sprite)
 
             this.sprite.body.checkCollision = true
+            this.sprite.body.collideWorldBounds = true;
             this.sprite.body.setSize(this.sprite.width * 0.25, this.sprite.height * 0.1, this.sprite.width * (0.5 - 0.25/2), this.sprite.height * 0.9)
 
             this.sprite.scale = Game.pixelartScalingFactorsP.clone();
@@ -27,7 +28,7 @@ module Game {
             this.cursors = game.input.keyboard.createCursorKeys();
         }
 
-        public update(game: Phaser.Game, obstacles: Obstacle[]) {
+        public update(game: Phaser.Game) {
             this.handleControls()
         }
 
