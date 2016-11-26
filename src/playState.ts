@@ -27,13 +27,15 @@ module Game {
 
         create () {
 
+
             this.floorGroup = new Phaser.Group(this.game)
-            this.obstacleGroup = new Phaser.Group(this.game)
             this.backgroundGroup = new Phaser.Group(this.game)
+            this.obstacleGroup = new Phaser.Group(this.game)
             this.collisionGroup = new Phaser.Group(this.game)
 
             this.background = new ParallaxBackground(this.game, 'bg1', 'bg2', 'bg3', this.backgroundGroup)
             this.backgroundWall = this.game.add.sprite(0, 0, 'invisible', this.collisionGroup)
+            this.backgroundWall.visible=false
             this.backgroundWall.width = this.game.camera.width
             this.backgroundWall.height = this.background.height
 

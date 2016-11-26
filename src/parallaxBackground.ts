@@ -23,6 +23,12 @@ module Game {
             this.bg2 = game.add.tileSprite(0, 0, actualWidth, actualHeight, bgKey2)
 
             this.bg3 = game.add.tileSprite(0, 0, actualWidth, actualHeight, bgKey3)
+
+            group.add(this.bg1)
+            group.add(this.bg2)
+            group.add(this.bg3)
+
+
         }
 
      update(dx: number) {
