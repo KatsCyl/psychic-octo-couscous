@@ -15,11 +15,6 @@ module Game {
             this.game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE)
             this.iso.projector.anchor = new Phaser.Point(0.5, 0.5)
 
-            console.log("ASD")
-
-            // Sprite loading, to be in loadState
-            this.game.load.image('general', 'assets/general.png');
-
         }
 
         create () {
