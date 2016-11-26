@@ -110,4 +110,39 @@ module Game {
            return Enemy.Type.CIVILIAN
         }
     }
+
+    export class Soldier extends Enemy {
+        public static readonly SPRITE_KEY = "soldier";
+
+        private ticker: number = 0
+
+        constructor(private game: Phaser.Game, x: number, y: number, group: Phaser.Group) {
+           super(game, x, y, Soldier.SPRITE_KEY, group)
+
+           this.health = 50
+           this.speed = 30
+           this.sprite.body.velocity.x = this.speed
+        }
+
+        move(player: Player): void {
+           if (this.ticker % 100 === 0) {
+              // change direction
+              let movementDirection = this.game.physics.arcade.angleBetween(this.sprite, player.getSprite()) * (180 / Math.PI);
+
+              this.game.physics.arcade.velocityFromAngle(movementDirection, this.speed, this.sprite.body.velocity);
+              this.ticker = 0;
+           }
+
+           this.ticker++;
+        }
+
+        attack(player: Player): void {
+           console.log("ATTAAACCCKKK!");
+           return;
+        }
+
+        getType(): Enemy.Type {
+           return Enemy.Type.SOLDIER;
+        }
+    }
 }
