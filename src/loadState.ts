@@ -32,6 +32,7 @@ export class loadState extends Phaser.State {
 
         this.game.load.image('general', 'assets/general.png')
         this.game.load.image('obstacle1', 'assets/obstacle1.png')
+        this.game.load.spritesheet(Soldier.SPRITE_KEY, 'assets/soldier-tmp.png', 100, 100, 4)
         this.game.load.atlasJSONArray(Civilian.SPRITE_KEY, 'assets/fox.png', 'assets/fox.json', Phaser.Loader.TEXTURE_ATLAS_JSON_ARRAY)
         this.game.load.atlasJSONArray('playerAnimations', 'assets/player/playerAnimation.png', 'assets/player/playerAnimation.json', Phaser.Loader.TEXTURE_ATLAS_JSON_ARRAY)
 

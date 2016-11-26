@@ -119,6 +119,10 @@ module Game {
         constructor(private game: Phaser.Game, x: number, y: number, group: Phaser.Group) {
            super(game, x, y, Soldier.SPRITE_KEY, group)
 
+           this.sprite.animations.add('walk', undefined , 5, true)
+           this.sprite.animations.play('walk')
+
+
            this.health = 50
            this.speed = 30
            this.sprite.body.velocity.x = this.speed
@@ -131,6 +135,11 @@ module Game {
 
               this.game.physics.arcade.velocityFromAngle(movementDirection, this.speed, this.sprite.body.velocity);
               this.ticker = 0;
+              if(this.sprite.body.velocity.x > 0) {
+                  this.sprite.scale = Game.pixelartScalingFactorsP.clone()
+              } else {
+                  this.sprite.scale = Game.pixelartScalingFactorsP.clone().multiply(-1, 1)
+              }
            }
 
            this.ticker++;
