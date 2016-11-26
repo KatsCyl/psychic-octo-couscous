@@ -7,10 +7,8 @@ module Game {
 
         constructor() {
             super(window.innerWidth, window.innerHeight, Phaser.CANVAS, 'GameDiv');
-            var gameWidth = window.innerWidth
-            var gameHeight = window.innerHeight
             
-            Game.scalingFactors = [gameWidth / this.wantedGameWidth, gameHeight / this.wantedGameHeight]
+            Game.scalingFactors = [this.width / this.wantedGameWidth, this.height / this.wantedGameHeight]
 
             this.state.add('loading', loadState, false)
             this.state.add('credits', creditsState, false)

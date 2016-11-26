@@ -39,20 +39,20 @@ module Game {
                     this.flipped = true
                 }
                 this.sprite.animations.play('move')
-                this.sprite.body.velocity.x = -15
+                this.sprite.body.velocity.x = -100
             } else if ( this.cursors.right.isDown) {
                 if (this.flipped) {
                     this.flip()
                     this.flipped = false
                 }
                 this.sprite.animations.play('move')
-                this.sprite.body.velocity.x = 15
+                this.sprite.body.velocity.x = 100
             } else if ( this.cursors.up.isDown) {
                 this.sprite.animations.play('move')
-                this.sprite.body.velocity.y = -15
+                this.sprite.body.velocity.y = -100
             } else if ( this.cursors.down.isDown) {
                 this.sprite.animations.play('move')
-                this.sprite.body.velocity.y = 15
+                this.sprite.body.velocity.y = 100
             } else {
                 this.sprite.animations.play('idle')
                 this.sprite.body.velocity = new Phaser.Point(0,0)
