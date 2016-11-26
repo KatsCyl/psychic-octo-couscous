@@ -17,6 +17,7 @@ module Game {
         private foregroundWall: Phaser.Physics.Arcade.Body
 
         private obstacles: Obstacle[] = []
+        private enemies: Enemy[] = [];
 
         private player: Player
 
@@ -49,8 +50,13 @@ module Game {
             // temporary obstacle
             let tempObstacle = new Obstacle(this.game, 400, 100, 'obstacle1', this.obstacleGroup);
             let tempObstacle2 = new Obstacle(this.game, 120, 200, 'obstacle1', this.obstacleGroup);
+            let testCivilian = new Civilian(this.game, 400, 300, this.obstacleGroup);
+
             this.obstacles.push(tempObstacle);
             this.obstacles.push(tempObstacle2);
+            this.obstacles.push(testCivilian);
+
+            this.enemies.push(testCivilian);
 
             // Camera stuff
             this.game.camera.follow(this.player.sprite)
@@ -61,7 +67,13 @@ module Game {
             this.cameraDx = this.game.camera.x;
             this.backgroundWall.x = this.game.camera.x
             this.player.update(this.game, this.obstacles);
+
+            for (let enemy of this.enemies) {
+               enemy.update(this.player);
+            }
+
             this.physics.arcade.collide(this.collisionGroup, this.player.sprite)
+            this.physics.arcade.collide(this.obstacleGroup);
             this.background.update(this.cameraDx)
             this.obstacleGroup.sort('bottom', Phaser.Group.SORT_ASCENDING);
         }

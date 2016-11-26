@@ -28,10 +28,6 @@ module Game {
         }
 
         public update(game: Phaser.Game, obstacles: Obstacle[]) {
-            for (let obstacle of obstacles) {
-               game.physics.arcade.collide(this.sprite, obstacle.getSprite());
-            }
-
             this.handleControls()
         }
 
