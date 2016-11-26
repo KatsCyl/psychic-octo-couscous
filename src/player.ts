@@ -1,5 +1,6 @@
 module Game {
     export class Player {
+        private readonly SPEED = 100;
 
         public sprite: Phaser.Sprite
 
@@ -54,24 +55,24 @@ module Game {
                        this.flipped = true
                    }
                    this.sprite.animations.play('move')
-                   this.sprite.body.velocity.x = -30
+                   this.sprite.body.velocity.x = -this.SPEED
                } else if ( this.cursors.right.isDown) {
                    if (this.flipped) {
                        this.flip()
                        this.flipped = false
                    }
                    this.sprite.animations.play('move')
-                   this.sprite.body.velocity.x = 30
+                   this.sprite.body.velocity.x = this.SPEED
                } else {
                    this.sprite.body.velocity.x = 0;
                }
                
                if (this.cursors.down.isDown) {
                    this.sprite.animations.play('move')
-                   this.sprite.body.velocity.y = 30
+                   this.sprite.body.velocity.y = this.SPEED
                } else if (this.cursors.up.isDown) {
                    this.sprite.animations.play('move')
-                   this.sprite.body.velocity.y = -30
+                   this.sprite.body.velocity.y = -this.SPEED
                } else {
                    this.sprite.body.velocity.y = 0;
                }

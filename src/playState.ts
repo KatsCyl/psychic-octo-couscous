@@ -28,15 +28,13 @@ module Game {
         }
 
         create () {
-
-
             this.floorGroup = new Phaser.Group(this.game)
             this.backgroundGroup = new Phaser.Group(this.game)
             this.obstacleGroup = new Phaser.Group(this.game)
             this.collisionGroup = new Phaser.Group(this.game)
 
             this.background = new ParallaxBackground(this.game, 'bg1', 'bg2', 'bg3', this.backgroundGroup)
-            this.backgroundWall = this.game.add.sprite(0, 0, 'invisible', this.collisionGroup)
+            this.backgroundWall = this.game.add.sprite(0, 0, 'invisible')
             this.backgroundWall.visible=false
             this.backgroundWall.width = this.game.camera.width
             this.backgroundWall.height = this.background.height
@@ -57,27 +55,25 @@ module Game {
             // Camera stuff
             this.game.camera.follow(this.player.sprite)
             this.game.camera.deadzone = new Phaser.Rectangle(this.game.camera.width * 0.2, 0, this.game.camera.width * 0.6, this.game.camera.height)
-
         }
 
         update () {
             this.cameraDx = this.game.camera.x;
             this.backgroundWall.x = this.game.camera.x
             this.player.update(this.game, this.obstacles);
-            this.physics.arcade.collide(this.collisionGroup)
+            this.physics.arcade.collide(this.collisionGroup, this.player.sprite)
             this.background.update(this.cameraDx)
             this.obstacleGroup.sort('bottom', Phaser.Group.SORT_ASCENDING);
         }
 
         render () {
-            /*var zone = this.game.camera.deadzone;
+           /*
             for (let obstacle of this.obstacles) {
                this.game.debug.body(obstacle.getSprite());
                this.game.debug.spriteBounds(obstacle.getSprite());
             }
            
-            this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
-            this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
+            this.game.debug.body(this.backgroundWall);
             */
         }
     }
