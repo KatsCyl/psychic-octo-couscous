@@ -55,7 +55,7 @@ module Game {
                 this.sprite.body.velocity.y = 15
             } else {
                 this.sprite.animations.play('idle')
-                this.sprite.body.velocity.x = 0
+                this.sprite.body.velocity = new Phaser.Point(0,0)
 
             }
         }
