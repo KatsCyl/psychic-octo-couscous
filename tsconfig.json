@@ -3,19 +3,9 @@
         "module": "commonjs",
         "target": "es5",
         "noImplicitAny": false,
-<<<<<<< 81154e225813a9114104f1f4955e19538afdc16a
         "sourceMap": true,
-<<<<<<< 51d7962a3b08f10e8984589e1f54ea942bb3ba69
         "rootDir": "src",
         "outFile": "dist/main.js"
-=======
-        "rootDir" : "src",
-        "outDir" : "dist"
-=======
-        "sourceMap": false,
-        "rootDir": "src",
-        "outDir": "dist"
->>>>>>> Asd
->>>>>>> Asd
+
     }
 }
