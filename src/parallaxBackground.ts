@@ -21,7 +21,7 @@ module Game {
 
             this.floor = game.add.tileSprite(0, actualHeight, actualWidth, game.camera.height - actualHeight, 'floor')
             this.floor.smoothed = false;
-            this.floor.scale = Game.pixelartScalingFactorsP
+            this.floor.tileScale = Game.pixelartScalingFactorsP
 
             this.bg1 = game.add.tileSprite(0, 0, actualWidth, actualHeight, bgKey1)
 
