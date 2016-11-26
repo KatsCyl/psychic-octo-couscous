@@ -25,6 +25,7 @@ export class loadState extends Phaser.State {
 
         this.game.load.image('invisible', 'assets/invisible.png')
 
+        this.game.load.image('floor', 'assets/backgrounds/bg-grass-tile.png')
         this.game.load.image('bg1', 'assets/backgrounds/parallax-forest-back-trees.png')
         this.game.load.image('bg2', 'assets/backgrounds/parallax-forest-middle-trees.png')
         this.game.load.image('bg3', 'assets/backgrounds/parallax-forest-front-trees.png')
