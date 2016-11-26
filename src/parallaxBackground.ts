@@ -21,7 +21,8 @@ module Game {
 
             this.floor = game.add.tileSprite(0, actualHeight, actualWidth, game.camera.height - actualHeight, 'floor')
             this.floor.smoothed = false;
-            this.floor.tileScale = Game.pixelartScalingFactorsP
+            this.floor.tileScale = Game.pixelartScalingFactorsP.clone()
+            this.floor.tilePosition.x = 0
 
             this.bg1 = game.add.tileSprite(0, 0, actualWidth, actualHeight, bgKey1)
 
@@ -39,7 +40,7 @@ module Game {
 
      update(dx: number) {
         this.floor.position.x = dx
-        this.floor.tilePosition.x = - dx;
+        this.floor.tilePosition.x = - dx / Game.pixelartScalingFactorsP.x; 
         this.bg1.position.x = dx
         this.bg1.tilePosition.x = - dx * 0.05;
         this.bg2.position.x = dx

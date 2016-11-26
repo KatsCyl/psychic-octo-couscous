@@ -22,7 +22,7 @@ module Game {
             this.sprite.body.checkCollision = true
             this.sprite.body.setSize(this.sprite.width * 0.25, this.sprite.height * 0.1, this.sprite.width * (0.5 - 0.25/2), this.sprite.height * 0.9)
 
-            this.sprite.scale = Game.pixelartScalingFactorsP
+            this.sprite.scale = Game.pixelartScalingFactorsP.clone();
 
             this.cursors = game.input.keyboard.createCursorKeys();
         }

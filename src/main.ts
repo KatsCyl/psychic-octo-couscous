@@ -12,7 +12,7 @@ module Game {
             
             Game.scalingFactors = [this.width / this.wantedGameWidth, this.height / this.wantedGameHeight]
             Game.scalingFactorsP = new Phaser.Point(Game.scalingFactors[0], Game.scalingFactors[1])
-            Game.pixelartScalingFactorsP = Game.scalingFactorsP.multiply(3, 3)
+            Game.pixelartScalingFactorsP = Game.scalingFactorsP.multiply(6, 6)
 
             this.state.add('loading', loadState, false)
             this.state.add('credits', creditsState, false)
