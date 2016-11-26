@@ -31,7 +31,7 @@ class Main {
         this.game.state.add('menu', menuState, false)
         this.game.state.add('play', playState, false)
 
-        this.game.state.start('loading');
+        this.game.state.start('play');
             
     }
 
