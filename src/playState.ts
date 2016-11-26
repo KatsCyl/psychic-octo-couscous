@@ -31,8 +31,12 @@ module Game {
             this.background.width = this.game.camera.width
             this.background.height = this.game.camera.height
 
-            this.player = new Player(this.game, this.isoPhysics, 0, 0, 'playerAnimations')
+            this.player = new Player(this.game, this.isoPhysics, 50, 50, 50, 'playerAnimations')
 
+        }
+
+        update () {
+            this.player.update();
         }
     }
 }
