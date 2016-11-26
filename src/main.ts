@@ -13,6 +13,7 @@ module Game {
             this.scalingFactors = [gameWidth / this.wantedGameWidth, gameHeight / this.wantedGameHeight]
 
             this.state.add('loading', loadState, false)
+            this.state.add('credits', creditsState, false)
             this.state.add('menu', menuState, false)
             this.state.add('play', playState, false)
 

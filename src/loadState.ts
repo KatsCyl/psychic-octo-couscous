@@ -18,7 +18,7 @@ export class loadState extends Phaser.State {
             console.log(this.game.load.progress)
             this.loadingBar.update(this.game.load.progress)
         }
-        if (this.loaded) { this.game.state.start('play') }
+        if (this.loaded) { this.game.state.start('menu') }
 	}
 
     private loadAssets() {
