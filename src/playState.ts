@@ -2,18 +2,19 @@ module Game {
     export class playState extends Phaser.State {
 
         // Sprite groups
+        private backgroundGroup: Phaser.Group
         private floorGroup: Phaser.Group
         private obstacleGroup: Phaser.Group
 
         // collision group
         private collisionGroup: Phaser.Group
         
-        // change backgroud to scrolling parallax
-        private background: Phaser.Sprite
+        private background: ParallaxBackground
         private floor: Phaser.Sprite
 
         // Foregroud wall
-        private foreGround: Phaser.Physics.Arcade.Body
+        private backgroundWall: Phaser.Sprite
+        private foregroundWall: Phaser.Physics.Arcade.Body
 
         private player: Player
 
@@ -26,11 +27,12 @@ module Game {
             this.obstacleGroup = new Phaser.Group(this.game)
             this.collisionGroup = new Phaser.Group(this.game)
 
-            this.background = this.game.add.sprite(0, 0, 'general', this.floorGroup)
-            this.background.width = this.game.camera.width * 300
-            this.background.height = this.game.camera.height * 1/3
+            this.background = new ParallaxBackground(this.game, 'bg1', 'bg2', 'bg3', this.backgroundGroup)
+            this.backgroundWall = this.game.add.sprite(0, 0, 'invisible', this.collisionGroup)
+            this.backgroundWall.width = this.game.camera.width
+            this.backgroundWall.height = this.background.height
+
             this.game.physics.arcade.enableBody(this.background)
-            this.background.body.immovable = true
 
             this.collisionGroup.add(this.background)
 
@@ -41,6 +43,7 @@ module Game {
         }
 
         update () {
+            this.backgroundWall.x = this.game.camera.x
             this.player.update()
             this.physics.arcade.collide(this.collisionGroup)
         }

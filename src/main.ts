@@ -1,6 +1,6 @@
 module Game {
-    class Game extends Phaser.Game {
-        public scalingFactors: [number, number]
+    export class Game extends Phaser.Game {
+        public static scalingFactors: [number, number]
 
         private wantedGameWidth = 1920
         private wantedGameHeight = 1080
@@ -10,7 +10,7 @@ module Game {
             var gameWidth = window.innerWidth
             var gameHeight = window.innerHeight
             
-            this.scalingFactors = [gameWidth / this.wantedGameWidth, gameHeight / this.wantedGameHeight]
+            Game.scalingFactors = [gameWidth / this.wantedGameWidth, gameHeight / this.wantedGameHeight]
 
             this.state.add('loading', loadState, false)
             this.state.add('credits', creditsState, false)
