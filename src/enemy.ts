@@ -13,6 +13,7 @@ module Game {
 
             this.sprite.body.checkCollision = true
             this.sprite.body.setSize(this.sprite.width, this.sprite.height * 0.1, 0, this.sprite.height * 0.9)
+            this.sprite.scale = Game.pixelartScalingFactorsP.clone();
         }
 
         getSprite(): Phaser.Sprite {
