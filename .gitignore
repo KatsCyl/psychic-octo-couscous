@@ -1,5 +1,5 @@
 node_modules/
-built/*
+dist/*
 tests/cases/rwc/*
 tests/cases/test262/*
 tests/cases/perf/*
