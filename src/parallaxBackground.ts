@@ -25,10 +25,13 @@ module Game {
             this.floor.tilePosition.x = 0
 
             this.bg1 = game.add.tileSprite(0, 0, actualWidth, actualHeight, bgKey1)
+            this.bg1.tileScale.y = Game.scalingFactors[1]
 
             this.bg2 = game.add.tileSprite(0, 0, actualWidth, actualHeight, bgKey2)
+            this.bg2.tileScale.y = Game.scalingFactors[1]
 
             this.bg3 = game.add.tileSprite(0, 0, actualWidth, actualHeight, bgKey3)
+            this.bg3.tileScale.y = Game.scalingFactors[1]
 
             group.add(this.floor)
             group.add(this.bg1)

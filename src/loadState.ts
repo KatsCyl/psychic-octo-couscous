@@ -26,13 +26,13 @@ export class loadState extends Phaser.State {
         this.game.load.image('invisible', 'assets/invisible.png')
 
         this.game.load.image('floor', 'assets/backgrounds/bg-grass-tile.png')
-        this.game.load.image('bg1', 'assets/backgrounds/parallax-forest-back-trees.png')
-        this.game.load.image('bg2', 'assets/backgrounds/parallax-forest-middle-trees.png')
-        this.game.load.image('bg3', 'assets/backgrounds/parallax-forest-front-trees.png')
+        this.game.load.image('bg1', 'assets/backgrounds/backgroung1.png')
+        this.game.load.image('bg2', 'assets/backgrounds/backgroung2.png')
+        this.game.load.image('bg3', 'assets/backgrounds/backgroung3.png')
 
         this.game.load.image('general', 'assets/general.png')
         this.game.load.image('obstacle1', 'assets/obstacle1.png')
-        this.game.load.image(Civilian.SPRITE_KEY, 'assets/civilian.png')
+        this.game.load.atlasJSONArray(Civilian.SPRITE_KEY, 'assets/fox.png', 'assets/fox.json', Phaser.Loader.TEXTURE_ATLAS_JSON_ARRAY)
         this.game.load.atlasJSONArray('playerAnimations', 'assets/player/playerAnimation.png', 'assets/player/playerAnimation.json', Phaser.Loader.TEXTURE_ATLAS_JSON_ARRAY)
 
         this.game.load.start()

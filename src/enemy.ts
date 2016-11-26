@@ -15,7 +15,8 @@ module Game {
             this.sprite.body.collideWorldBounds = true;
             this.sprite.body.setSize(this.sprite.width, this.sprite.height * 0.1, 0, this.sprite.height * 0.9)
 
-            this.sprite.scale = Game.pixelartScalingFactorsP.clone();
+            this.sprite.anchor = new Phaser.Point(0.5, 0.5)
+            this.sprite.scale = Game.pixelartScalingFactorsP.clone().multiply(-1, 1);
         }
 
         getSprite(): Phaser.Sprite {
@@ -40,12 +41,15 @@ module Game {
     }
 
 export class Civilian extends Enemy {
-        public static readonly SPRITE_KEY = "civilian";
+        public static readonly SPRITE_KEY = "fox";
 
         private ticker: number = 0
 
         constructor(game: Phaser.Game, x: number, y: number, group: Phaser.Group) {
            super(game, x, y, Civilian.SPRITE_KEY, group)
+
+           this.sprite.animations.add('walk', [0,1], 5, true)
+           this.sprite.animations.play('walk')
 
            this.health = 10
            this.speed = 100
@@ -53,9 +57,10 @@ export class Civilian extends Enemy {
         }
 
         move(player: Player): void {
-           if (this.ticker % 60 === 0) {
+           if (this.ticker % 170 === 0) {
               // change direction
               this.sprite.body.velocity.x *= -1;
+              this.sprite.scale.multiply(-1, 1);
               this.ticker = 0;
            }
 
