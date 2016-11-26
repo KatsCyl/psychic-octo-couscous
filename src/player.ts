@@ -1,31 +1,49 @@
 module Game {
     export class Player {
 
-        private isoPhysics: Phaser.Plugin.Isometric.Arcade
         private cursors: Phaser.CursorKeys
-        private isoBody: Phaser.Plugin.Isometric.Body
         private sprite: Phaser.Sprite
+        private flipped: boolean = false
 
+        constructor(game: Phaser.Game, x: number, y: number, animations: any, group: Phaser.Group) {
+            this.sprite = game.add.sprite(x, y, animations, group)
+            this.sprite.anchor = new Phaser.Point(0.5, 0.5)
+            this.sprite.scale = new Phaser.Point(2.5, 2.5)
 
-
-        constructor(game: Phaser.Game, sprite: Phaser.Sprite, isoPhysics: Phaser.Plugin.Isometric.Arcade) {
-
-            this.isoPhysics = isoPhysics
-            this.sprite = sprite
-            this.sprite.animations.add('idle', [1, 2, 3], 10, true)
+            this.sprite.animations.add('idle', [0, 1, 2, 3], 5, true)
+            this.sprite.animations.add('move', [4, 5, 6, 7, 8], 5, true)
             this.sprite.animations.play('idle')
-            this.isoPhysics.enable(this)
-            this.cursors = this.sprite.game.input.keyboard.createCursorKeys();
+            game.physics.arcade.enableBody(this.sprite)
+            this.cursors = game.input.keyboard.createCursorKeys();
         }
 
         update() {
             this.handleControls()
         }
 
+        private flip () {
+            this.sprite.scale.x *= -1
+        }
+
         private handleControls() {
             if (this.cursors.left.isDown) {
-                this.sprite.body.velocity.x = 10
-                console.log(this.isoBody.position.x)
+                if (!this.flipped) {
+                    this.flip()
+                    this.flipped = true
+                }
+                this.sprite.animations.play('move')
+                this.sprite.body.velocity.x = -15
+            } else if ( this.cursors.right.isDown) {
+                if (this.flipped) {
+                    this.flip()
+                    this.flipped = false
+                }
+                this.sprite.animations.play('move')
+                this.sprite.body.velocity.x = 15
+            } else {
+                this.sprite.animations.play('idle')
+                this.sprite.body.velocity.x = 0
+
             }
         }
     }
