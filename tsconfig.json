@@ -6,6 +6,5 @@
         "sourceMap": true,
         "rootDir": "src",
         "outFile": "dist/main.js"
-
     }
 }
