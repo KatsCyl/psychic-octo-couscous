@@ -1,12 +1,14 @@
 module Game {
     export class Player {
 
-        private cursors: Phaser.CursorKeys
         public sprite: Phaser.Sprite
+
         private flipped: boolean = false
+        private cursors: Phaser.CursorKeys
 
         constructor(game: Phaser.Game, x: number, y: number, animations: any, group: Phaser.Group) {
-            this.sprite = game.add.sprite(x, y, animations, group)
+            this.sprite = game.add.sprite(x, y, animations)
+            group.add(this.sprite);
             this.sprite.anchor = new Phaser.Point(0.5, 0.5)
             this.sprite.smoothed = false;
 
@@ -41,30 +43,38 @@ module Game {
         }
 
         private handleControls() {
-            if (this.cursors.left.isDown) {
-                if (!this.flipped) {
-                    this.flip()
-                    this.flipped = true
-                }
-                this.sprite.animations.play('move')
-                this.sprite.body.velocity.x = -30
-            } else if ( this.cursors.right.isDown) {
-                if (this.flipped) {
-                    this.flip()
-                    this.flipped = false
-                }
-                this.sprite.animations.play('move')
-                this.sprite.body.velocity.x = 100
-            } else if ( this.cursors.up.isDown) {
-                this.sprite.animations.play('move')
-                this.sprite.body.velocity.y = -100
-            } else if ( this.cursors.down.isDown) {
-                this.sprite.animations.play('move')
-                this.sprite.body.velocity.y = 100
-            } else {
+            if (!this.cursors.left.isDown && !this.cursors.right.isDown &&
+                !this.cursors.up.isDown && !this.cursors.down.isDown) {
                 this.sprite.animations.play('idle')
                 this.sprite.body.velocity = new Phaser.Point(0,0)
-
+            } else {
+               if (this.cursors.left.isDown) {
+                   if (!this.flipped) {
+                       this.flip()
+                       this.flipped = true
+                   }
+                   this.sprite.animations.play('move')
+                   this.sprite.body.velocity.x = -30
+               } else if ( this.cursors.right.isDown) {
+                   if (this.flipped) {
+                       this.flip()
+                       this.flipped = false
+                   }
+                   this.sprite.animations.play('move')
+                   this.sprite.body.velocity.x = 30
+               } else {
+                   this.sprite.body.velocity.x = 0;
+               }
+               
+               if (this.cursors.down.isDown) {
+                   this.sprite.animations.play('move')
+                   this.sprite.body.velocity.y = 30
+               } else if (this.cursors.up.isDown) {
+                   this.sprite.animations.play('move')
+                   this.sprite.body.velocity.y = -30
+               } else {
+                   this.sprite.body.velocity.y = 0;
+               }
             }
         }
     }

@@ -66,21 +66,19 @@ module Game {
             this.player.update(this.game, this.obstacles);
             this.physics.arcade.collide(this.collisionGroup)
             this.background.update(this.cameraDx)
-            this.obstacleGroup.sort('y', Phaser.Group.SORT_ASCENDING);
+            this.obstacleGroup.sort('bottom', Phaser.Group.SORT_ASCENDING);
         }
 
         render () {
-
             /*var zone = this.game.camera.deadzone;
             for (let obstacle of this.obstacles) {
                this.game.debug.body(obstacle.getSprite());
                this.game.debug.spriteBounds(obstacle.getSprite());
             }
-
+           
             this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
             this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
             */
-            this.player = new Player(this.game, 100, 100, 'playerAnimations', this.obstacleGroup) 
         }
     }
 }
