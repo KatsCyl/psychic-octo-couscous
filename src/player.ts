@@ -8,6 +8,7 @@ module Game {
         constructor(game: Phaser.Game, x: number, y: number, animations: any, group: Phaser.Group) {
             this.sprite = game.add.sprite(x, y, animations, group)
             this.sprite.anchor = new Phaser.Point(0.5, 0.5)
+            this.sprite.smoothed = false;
             this.sprite.scale = new Phaser.Point(2.5, 2.5)
 
             this.sprite.animations.add('idle', [0, 1, 2, 3], 5, true)
