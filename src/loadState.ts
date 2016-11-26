@@ -24,6 +24,7 @@ export class loadState extends Phaser.State {
     private loadAssets() {
 
         this.game.load.image('general', 'assets/general.png')
+        this.game.load.atlasJSONArray('playerAnimations', 'assets/player/playerAnimation.png', 'assets/player/playerAnimation.json', Phaser.Loader.TEXTURE_ATLAS_JSON_ARRAY)
 
         this.game.load.start()
 
