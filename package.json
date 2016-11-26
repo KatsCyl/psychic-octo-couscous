@@ -1,0 +1,21 @@
+{
+  "name": "psychic-octo-couscous",
+  "version": "1.0.0",
+  "description": "Junction 2016 game-jam entry, keyword: Resurrection",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Everyfish/psychic-octo-couscous.git"
+  },
+  "author": "Everyfish",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Everyfish/psychic-octo-couscous/issues"
+  },
+  "homepage": "https://github.com/Everyfish/psychic-octo-couscous#readme",
+  "dependencies" :
+    { "http-server" : "0.9.0" }
+}
