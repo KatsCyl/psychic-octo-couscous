@@ -1,4 +1,18 @@
 module Game {
+    export namespace Enemy {
+        export enum Type {
+            CIVILIAN = 0,
+            SOLDIER
+        }
+
+        export const enum Direction {
+            UP = 0,
+            DOWN,
+            LEFT,
+            RIGHT
+        }
+    }
+
     export abstract class Enemy {
         protected sprite: Phaser.Sprite
         protected health: number
@@ -21,6 +35,28 @@ module Game {
 
         }
 
+        protected getRandomDirection(): Enemy.Direction {
+           let directions = [Enemy.Direction.UP, Enemy.Direction.DOWN, 
+                             Enemy.Direction.LEFT, Enemy.Direction.RIGHT];
+           return directions[Math.floor(Math.random() * directions.length)];
+        }
+
+        protected directionToVelocityVector(direction: Enemy.Direction): [number, number] {
+            switch (direction) {
+                 case Enemy.Direction.UP:
+                     return [0, -1];    
+                 case Enemy.Direction.DOWN:
+                     return [0, 1];
+                 case Enemy.Direction.LEFT:
+                     return [-1, 0];
+                 case Enemy.Direction.RIGHT:
+                     return [1, 0];
+                 default:
+                     return [0, 0];
+            }
+        }
+
+
         getSprite(): Phaser.Sprite {
             return this.sprite;
         }
@@ -35,17 +71,11 @@ module Game {
         abstract getType(): Enemy.Type
     }
 
-    export namespace Enemy {
-        export enum Type {
-            CIVILIAN = 0,
-            SOLDIER
-        }
-    }
-
-export class Civilian extends Enemy {
+   export class Civilian extends Enemy {
         public static readonly SPRITE_KEY = "fox";
 
         private ticker: number = 0
+        private direction = Enemy.Direction.LEFT
 
         constructor(game: Phaser.Game, x: number, y: number, group: Phaser.Group) {
            super(game, x, y, Civilian.SPRITE_KEY, group)
@@ -61,8 +91,11 @@ export class Civilian extends Enemy {
         move(player: Player): void {
            if (this.ticker % 170 === 0) {
               // change direction
-              this.sprite.body.velocity.x *= -1;
-              this.sprite.scale.multiply(-1, 1);
+              this.direction = this.getRandomDirection();
+
+              let [vx, vy] = this.directionToVelocityVector(this.direction);
+              this.sprite.body.velocity.x = vx * this.speed;
+              this.sprite.body.velocity.y = vy * this.speed;
               this.ticker = 0;
            }
 
@@ -77,5 +110,4 @@ export class Civilian extends Enemy {
            return Enemy.Type.CIVILIAN
         }
     }
-
 }
