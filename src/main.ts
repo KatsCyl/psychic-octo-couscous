@@ -1,12 +1,9 @@
 module Game {
-
     class Game extends Phaser.Game {
-
         public scalingFactors: [number, number]
 
         private wantedGameWidth = 1920
         private wantedGameHeight = 1080
-
 
         constructor() {
             super(window.innerWidth, window.innerHeight, Phaser.CANVAS, 'GameDiv');
@@ -20,15 +17,10 @@ module Game {
             this.state.add('play', playState, false)
 
             this.state.start('loading')
-
         }
-
     }
 
     window.onload = () => {
-
         var main = new Game()
-
     };
-
 }
