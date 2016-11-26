@@ -24,8 +24,16 @@ module Game {
             this.cursors = game.input.keyboard.createCursorKeys();
         }
 
-        update() {
+        public update(game: Phaser.Game, obstacles: Obstacle[]) {
+            for (let obstacle of obstacles) {
+               game.physics.arcade.collide(this.sprite, obstacle.getSprite());
+            }
+
             this.handleControls()
+        }
+
+        public getSprite() {
+            return this.sprite;
         }
 
         private flip () {
@@ -39,7 +47,7 @@ module Game {
                     this.flipped = true
                 }
                 this.sprite.animations.play('move')
-                this.sprite.body.velocity.x = -100
+                this.sprite.body.velocity.x = -30
             } else if ( this.cursors.right.isDown) {
                 if (this.flipped) {
                     this.flip()
