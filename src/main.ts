@@ -15,6 +15,8 @@ module Game {
             
             this.scalingFactors = [gameWidth / this.wantedGameWidth, gameHeight / this.wantedGameHeight]
 
+            console.log("ASDASD")
+
 
 
             this.state.add('loading', loadState, false)
@@ -30,6 +32,8 @@ module Game {
     }
 
     window.onload = () => {
+
+        console.log("ASDASDASDA")
 
         var main = new Game()
 
