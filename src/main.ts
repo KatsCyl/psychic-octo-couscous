@@ -19,7 +19,7 @@ module Game {
             this.state.add('menu', menuState, false)
             this.state.add('play', playState, false)
 
-            this.state.start('play')
+            this.state.start('loading')
 
         }
 
