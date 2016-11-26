@@ -20,7 +20,7 @@ module Game {
 
         public cameraDx: number = 0
 
-        private enemyManager: EnemyManager
+        public enemyManager: EnemyManager
 
         preload () {
             this.game.physics.startSystem(Phaser.Physics.ARCADE)
@@ -66,23 +66,19 @@ module Game {
 
             this.enemyManager.update()
 
-
             this.physics.arcade.collide(this.collisionGroup, this.player.sprite)
-            this.physics.arcade.collide(this.obstacleGroup, undefined, this.collisionCallback);
+            this.physics.arcade.collide(this.obstacleGroup, undefined, (obj, obj2) => {this.collisionCallback(obj, obj2, this.enemyManager)});
             this.background.update(this.cameraDx)
             this.obstacleGroup.sort('bottom', Phaser.Group.SORT_ASCENDING);
         }
 
-        collisionCallback (obj: any, obj2: any) {
-            console.log("COLLISION" , obj)
+        private collisionCallback (obj: any, obj2: any, enemyManager: EnemyManager) {
+            // not working
+            if(obj.customParent instanceof Player && obj2.customParent instanceof Enemy) {
+                enemyManager.kill(obj2.customParent)
 
-            if(obj instanceof Player && obj2 instanceof Enemy) {
-                this.enemyManager.kill(obj2)
-                console.log("COLLISION ENEMY")
-
-            } else if(obj instanceof Enemy && obj2 instanceof Player) {
-                this.enemyManager.kill(obj)
-                console.log("COLLISION ENEMY")
+            } else if(obj.customParent instanceof Enemy && obj2.customParent instanceof Player) {
+                enemyManager.kill(obj.customParent)
 
             }
         }

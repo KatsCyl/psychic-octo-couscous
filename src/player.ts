@@ -26,6 +26,8 @@ module Game {
             this.sprite.scale = Game.pixelartScalingFactorsP.clone();
 
             this.cursors = game.input.keyboard.createCursorKeys();
+
+            (this.sprite as any).customParent = this
         }
 
         public update(game: Phaser.Game) {

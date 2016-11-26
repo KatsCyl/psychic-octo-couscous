@@ -17,6 +17,8 @@ module Game {
 
             this.sprite.anchor = new Phaser.Point(0.5, 0.5)
             this.sprite.scale = Game.pixelartScalingFactorsP.clone().multiply(-1, 1);
+            (this.sprite as any).customParent = this
+
         }
 
         getSprite(): Phaser.Sprite {

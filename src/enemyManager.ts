@@ -19,15 +19,21 @@ module Game{
             if (this.enemyList.length < this.max_spawn) {
                 this.trySpawn();
             }
+            
+            console.log(this.enemyList.length)
 
-            for (let enemy of this.enemyList) {
-                enemy.update(this.player)
+            for (let i = 0; i < this.enemyList.length; i++) {
+                if (this.enemyList[i].getSprite().alive == false) {
+                    this.enemyList.splice(i, 1);
+                } else {
+                    this.enemyList[i].update(this.player)
+                }
             }
 
         }
 
-        kill (enemy: Enemy) {
-            delete this.enemyList[this.enemyList.indexOf(enemy)]
+        public kill (enemy: Enemy) {
+           enemy.getSprite().kill()
         }
 
         private trySpawn(){
