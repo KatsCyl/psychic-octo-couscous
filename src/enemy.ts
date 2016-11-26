@@ -18,7 +18,10 @@ module Game {
         protected health: number
         protected speed: number
 
-        constructor(game: Phaser.Game, x: number, y: number, spriteKey: string, group: Phaser.Group) {
+        protected orientation: boolean
+
+        constructor(game: Phaser.Game, x: number, y: number, spriteKey: string, group: Phaser.Group, orientation: boolean) {
+            this.orientation = orientation
             this.sprite = game.add.sprite(x, y, spriteKey)
             group.add(this.sprite)
             this.sprite.smoothed = false;
@@ -56,6 +59,18 @@ module Game {
             }
         }
 
+        flip () {
+            let a = 1
+            if (this.orientation) { 
+                a = -1
+            } 
+            if(this.sprite.body.velocity.x > 0) {
+                this.sprite.scale = Game.pixelartScalingFactorsP.clone().multiply(a * -1, 1)
+            } else {
+                this.sprite.scale = Game.pixelartScalingFactorsP.clone().multiply(a, 1)
+            }
+        }
+
 
         getSprite(): Phaser.Sprite {
             return this.sprite;
@@ -64,6 +79,7 @@ module Game {
         update(player: Player): void {
             this.attack(player);
             this.move(player);
+            this.flip();
         }
 
         abstract move(player: Player): void
@@ -78,7 +94,7 @@ module Game {
         private direction = Enemy.Direction.LEFT
 
         constructor(game: Phaser.Game, x: number, y: number, group: Phaser.Group) {
-           super(game, x, y, Civilian.SPRITE_KEY, group)
+           super(game, x, y, Civilian.SPRITE_KEY, group, false)
 
            this.sprite.animations.add('walk', [0,1], 5, true)
            this.sprite.animations.play('walk')
@@ -117,7 +133,7 @@ module Game {
         private ticker: number = 0
 
         constructor(private game: Phaser.Game, x: number, y: number, group: Phaser.Group) {
-           super(game, x, y, Soldier.SPRITE_KEY, group)
+           super(game, x, y, Soldier.SPRITE_KEY, group, true)
 
            this.sprite.animations.add('walk', undefined , 5, true)
            this.sprite.animations.play('walk')
@@ -135,11 +151,6 @@ module Game {
 
               this.game.physics.arcade.velocityFromAngle(movementDirection, this.speed, this.sprite.body.velocity);
               this.ticker = 0;
-              if(this.sprite.body.velocity.x > 0) {
-                  this.sprite.scale = Game.pixelartScalingFactorsP.clone()
-              } else {
-                  this.sprite.scale = Game.pixelartScalingFactorsP.clone().multiply(-1, 1)
-              }
            }
 
            this.ticker++;
