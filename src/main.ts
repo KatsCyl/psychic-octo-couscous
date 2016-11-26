@@ -25,6 +25,11 @@ module Game {
 
 
 
+<<<<<<< 51d7962a3b08f10e8984589e1f54ea942bb3ba69
+=======
+        this.game.state.start('play');
+            
+>>>>>>> Asd
     }
 
     window.onload = () => {
