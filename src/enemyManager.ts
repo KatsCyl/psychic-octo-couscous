@@ -36,11 +36,16 @@ module Game{
         private trySpawn(){
             let rand = this.game.rnd.realInRange(0, 1)
             if(rand < this.spawnRate) {
-                let randEnemyType = this.game.rnd.integerInRange(0, 0)
+                let randEnemyType = this.game.rnd.integerInRange(0, 1)
                 let enemy: Enemy
                 let randPos = this.getRandPos()
-                if (randEnemyType == 0) {
-                    this.enemyList.push(new Civilian(this.game, randPos.x, randPos.y, this.enemyGroup ))
+                switch (randEnemyType) {
+                   case 0:
+                     this.enemyList.push(new Civilian(this.game, randPos.x, randPos.y, this.enemyGroup))
+                     break;
+                   case 1:
+                     this.enemyList.push(new Soldier(this.game, randPos.x, randPos.y, this.enemyGroup))
+                     break;
                 } 
             }
         }
