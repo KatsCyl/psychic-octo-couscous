@@ -23,6 +23,7 @@ module Game {
         constructor(protected game: Phaser.Game, x: number, y: number, spriteKey: string, group: Phaser.Group, orientation: boolean) {
             this.orientation = orientation
             this.sprite = game.add.sprite(x, y, spriteKey)
+            this.sprite.name = spriteKey;
             group.add(this.sprite)
             this.sprite.smoothed = false;
 
@@ -83,14 +84,15 @@ module Game {
         }
 
         getCorpse(group: Phaser.Group): Corpse {
-           return new Corpse(this.game, this.sprite.x, this.sprite.y,
-                             this.getCorpseSpriteKey(), group);
+           let corpseSpriteKey = this.sprite.name + "-dead";
+           console.log(corpseSpriteKey);
+           return new Corpse(this.game, this.sprite.body.x + this.sprite.body.width / 4,
+                             this.sprite.centerY, corpseSpriteKey, group);
         }
 
         abstract move(player: Player): void
         abstract attack(player: Player): void
         abstract getType(): Enemy.Type
-        abstract getCorpseSpriteKey(): string
     }
 
    export class Civilian extends Enemy {
@@ -132,10 +134,6 @@ module Game {
         getType(): Enemy.Type {
            return Enemy.Type.CIVILIAN
         }
-
-        getCorpseSpriteKey(): string {
-           return Civilian.CORPSE_SPRITE_KEY;
-        }
     }
 
     export class Soldier extends Enemy {
@@ -175,10 +173,6 @@ module Game {
 
         getType(): Enemy.Type {
            return Enemy.Type.SOLDIER;
-        }
-
-        getCorpseSpriteKey(): string {
-           return Soldier.CORPSE_SPRITE_KEY;
         }
     }
 }
