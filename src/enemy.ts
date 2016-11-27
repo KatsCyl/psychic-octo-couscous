@@ -105,7 +105,7 @@ module Game {
                   right = this.sprite.left
               }
               
-              return bulletX > (left - this.game.camera.position.x) && bulletX < (right - this.game.camera.position.x) &&
+              return bulletX > left && bulletX < right &&
                         bulletY > this.sprite.top && bulletY < this.sprite.bottom;
 
            } else {
