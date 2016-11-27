@@ -178,7 +178,7 @@ module Game {
 
             this.shootTicker++;
 
-           return;
+            return;
         }
 
         getType(): Enemy.Type {
