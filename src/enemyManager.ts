@@ -1,13 +1,13 @@
 module Game{
     export class EnemyManager {
         private readonly spawnRate: number = 0.01
-        private readonly max_spawn: number = 0
+        private readonly max_spawn: number = 5
 
         private enemyList: Enemy[] = []
         private corpseList: Corpse[] = []
 
         constructor(private game: Phaser.Game, private player: Player, 
-                    public enemyGroup: Phaser.Group, public corpseGroup: Phaser.Group) {
+                    public enemyGroup: Phaser.Group, public corpseGroup: Phaser.Group, private bulletManager: BulletManager) {
         }
 
         update() {
@@ -55,6 +55,10 @@ module Game{
             let randx = this.game.rnd.integerInRange(this.game.camera.x, this.game.camera.x + this.game.camera.width)
             let randy = this.game.rnd.integerInRange(this.game.camera.y, this.game.camera.y + this.game.camera.height)
             return new Phaser.Point(randx, randy)
+        }
+
+        public getEnemyList() {
+            return this.enemyList;
         }
     }
 }

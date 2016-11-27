@@ -3,12 +3,11 @@ module Game {
         private readonly SPEED = 100;
 
         public sprite: Phaser.Sprite
-        public feetCollisionSprite: Phaser.Sprite
 
         private flipped: boolean = false
         private cursors: Phaser.CursorKeys
 
-        constructor(game: Phaser.Game, x: number, y: number, animations: any, mainCollisionGroup: Phaser.Group, feetCollisionGroup: Phaser.Group) {
+        constructor(game: Phaser.Game, x: number, y: number, animations: any, mainCollisionGroup: Phaser.Group) {
             this.sprite = game.add.sprite(x, y, animations)
             mainCollisionGroup.add(this.sprite);
             game.physics.arcade.enableBody(this.sprite)
@@ -19,28 +18,16 @@ module Game {
             this.sprite.animations.add('move', [4, 5, 6, 7, 8], 5, true)
             this.sprite.animations.play('idle')
 
-            this.feetCollisionSprite = game.add.sprite(x, y, animations)
-            this.feetCollisionSprite.visible = false
-            feetCollisionGroup.add(this.feetCollisionSprite)
-            game.physics.arcade.enableBody(this.feetCollisionSprite)
-            this.feetCollisionSprite.anchor = new Phaser.Point(0.5, 0.5)
-            this.feetCollisionSprite.body.collideWorldBounds = true;
-            this.feetCollisionSprite.body.setSize(this.sprite.width * 0.25, this.sprite.height * 0.1, this.sprite.width * (0.5 - 0.25/2), this.sprite.height * 0.9)
-            this.sprite.addChild(this.feetCollisionSprite);
+            this.sprite.body.collideWorldBounds = true;
+            this.sprite.body.setSize(this.sprite.width * 0.25, this.sprite.height * 0.1, this.sprite.width * (0.5 - 0.25/2), this.sprite.height * 0.9)
 
-            
-
-            this.feetCollisionSprite.scale = Game.pixelartScalingFactorsP.clone();
             this.sprite.scale = Game.pixelartScalingFactorsP.clone();
-
             this.cursors = game.input.keyboard.createCursorKeys();
 
             (this.sprite as any).customParent = this
         }
 
         public update(game: Phaser.Game) {
-            this.feetCollisionSprite.body.position = Phaser.Point.add(this.sprite.body.position, new Phaser.Point(this.sprite.width * (0.5 - 0.25/2), this.sprite.height * 0.9))
-
             this.handleControls()
         }
 
@@ -48,8 +35,12 @@ module Game {
             return this.sprite;
         }
 
-        public getFeetSprite() {
-            return this.feetCollisionSprite
+        public collidesWithBullet(bullet: Bullet): boolean {
+           let bSprite = bullet.getSprite();
+           let [bulletX, bulletY] = [bSprite.centerX, bSprite.centerY];
+           
+           return bulletX > this.sprite.x && bulletX < this.sprite.right &&
+                  bulletY > this.sprite.y && bulletY < this.sprite.bottom;
         }
 
         private flip () {

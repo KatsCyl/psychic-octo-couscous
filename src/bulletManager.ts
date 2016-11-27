@@ -1,15 +1,9 @@
 module Game {
     export class BulletManager {
 
-        private game: Phaser.Game
-
-        private bulletGroup: Phaser.Group
-
         private bulletList: Bullet[] = []
 
-        constructor(game: Phaser.Game, group: Phaser.Group) {
-            this.game = game
-            this.bulletGroup = group
+        constructor(private game: Phaser.Game) {
         }
 
         update () {
@@ -22,13 +16,16 @@ module Game {
         }
 
         createBullet (pos: Phaser.Point, target: Phaser.Sprite) {
-            this.bulletList.push(new Bullet(this.game, pos.x, pos.y, target, this.bulletGroup))
+            this.bulletList.push(new Bullet(this.game, pos.x, pos.y, target))
         }
 
         kill (bullet: Bullet) {
             bullet.getSprite().kill()
         }
 
+        getBulletList() {
+            return this.bulletList;
+        }
 
     }
 
@@ -44,7 +41,7 @@ module Game {
 
         private damage: number
 
-        constructor(game: Phaser.Game, x: number, y:number, target: Phaser.Sprite, group: Phaser.Group) {
+        constructor(game: Phaser.Game, x: number, y:number, target: Phaser.Sprite) {
             this.sprite = game.add.sprite(x, y, this.BulletKey)
             game.physics.arcade.enableBody(this.sprite);
             let movementDirection = game.physics.arcade.angleBetween(this.sprite, target) * (180 / Math.PI);
@@ -56,8 +53,6 @@ module Game {
             (this.sprite as any).customParent = this
             this.sprite.checkWorldBounds = true
             this.sprite.outOfBoundsKill = true
-
-            group.add(this.sprite)
         }
 
 

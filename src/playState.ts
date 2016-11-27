@@ -47,7 +47,7 @@ module Game {
 
             this.collisionGroup.add(this.backgroundWall)
 
-            this.player = new Player(this.game, 100, 300, 'playerAnimations', this.collisionGroup, this.obstacleGroup) 
+            this.player = new Player(this.game, 100, 300, 'playerAnimations', this.obstacleGroup) 
 
             // temporary obstacle
             let tempObstacle = new Obstacle(this.game, 400, 100, 'obstacle1', this.obstacleGroup);
@@ -71,6 +71,22 @@ module Game {
 
             this.physics.arcade.collide(this.collisionGroup, undefined, (obj, obj2) => {this.collisionCallback(obj, obj2, this.enemyManager, this.bulletManager)})
             this.physics.arcade.collide(this.obstacleGroup, undefined, (obj, obj2) => {this.collisionCallback(obj, obj2, this.enemyManager, this.bulletManager)});
+
+            let bullets = this.bulletManager.getBulletList();
+            let enemies = this.enemyManager.getEnemyList();
+            for (let bullet of bullets) {
+               if (this.player.collidesWithBullet(bullet)) {
+                  console.log("DIED");
+               }
+
+               for (let enemy of enemies) {
+                  if (enemy.collidesWithBullet(bullet)) {
+                     this.enemyManager.kill(enemy);
+                  }
+               }
+            }
+
+
             this.background.update(this.cameraDx)
             this.obstacleGroup.sort('bottom', Phaser.Group.SORT_ASCENDING);
         }
@@ -101,7 +117,12 @@ module Game {
 
         render () {
             this.game.debug.body(this.player.getSprite());
-            this.game.debug.body(this.player.getFeetSprite())
+
+            let enemies = this.enemyManager.getEnemyList();
+            for (let enemy of enemies) {
+               this.game.debug.spriteBounds(enemy.getSprite());
+            }
+
         }
     }
 }

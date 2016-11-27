@@ -90,6 +90,19 @@ module Game {
                              this.sprite.centerY, corpseSpriteKey, group);
         }
 
+        collidesWithBullet(bullet: Bullet): boolean {
+           if (bullet.getActive()) {
+              let bSprite = bullet.getSprite();
+              let [bulletX, bulletY] = [bSprite.centerX, bSprite.centerY];
+              
+              console.log("testing with active");
+              return bulletX > this.sprite.left && bulletX < this.sprite.right &&
+                     bulletY > this.sprite.top && bulletY < this.sprite.bottom;
+           } else {
+              return false;
+           }
+        }
+
         abstract move(player: Player): void
         abstract attack(player: Player): void
         abstract getType(): Enemy.Type
