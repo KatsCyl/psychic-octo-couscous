@@ -57,7 +57,7 @@ module Game {
             this.game.camera.follow(this.player.sprite)
             this.game.camera.deadzone = new Phaser.Rectangle(this.game.camera.width * 0.2, 0, this.game.camera.width * 0.6, this.game.camera.height)
             
-            this.bulletManager = new BulletManager(this.game, this.collisionGroup)
+            this.bulletManager = new BulletManager(this.game)
             this.enemyManager = new EnemyManager(this.game, this.player, this.obstacleGroup, this.corpseGroup, this.bulletManager)
         }
 
@@ -115,14 +115,5 @@ module Game {
             }
         }
 
-        render () {
-            this.game.debug.body(this.player.getSprite());
-
-            let enemies = this.enemyManager.getEnemyList();
-            for (let enemy of enemies) {
-               this.game.debug.spriteBounds(enemy.getSprite());
-            }
-
-        }
     }
 }

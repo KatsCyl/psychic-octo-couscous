@@ -18,6 +18,8 @@ module Game {
         protected health: number
         protected speed: number
 
+        protected flipped: boolean = false
+
         protected orientation: boolean
 
         constructor(protected game: Phaser.Game, x: number, y: number, spriteKey: string, group: Phaser.Group, orientation: boolean) {
@@ -61,6 +63,7 @@ module Game {
         }
 
         flip () {
+            this.flipped = !this.flipped
             let a = 1
             if (this.orientation) { 
                 a = -1
@@ -95,9 +98,16 @@ module Game {
               let bSprite = bullet.getSprite();
               let [bulletX, bulletY] = [bSprite.centerX, bSprite.centerY];
               
-              console.log("testing with active");
-              return bulletX > this.sprite.left && bulletX < this.sprite.right &&
-                     bulletY > this.sprite.top && bulletY < this.sprite.bottom;
+              let left = this.sprite.left
+              let right = this.sprite.right
+              if (this.flipped) {
+                  left = this.sprite.right
+                  right = this.sprite.left
+              }
+              
+              return bulletX > (left - this.game.camera.position.x) && bulletX < (right - this.game.camera.position.x) &&
+                        bulletY > this.sprite.top && bulletY < this.sprite.bottom;
+
            } else {
               return false;
            }
@@ -158,7 +168,7 @@ module Game {
         private moveTime: number = 110
         private shootTime: number = 50
 
-        constructor(private game: Phaser.Game, x: number, y: number, group: Phaser.Group, private bulletManager: BulletManager) {
+        constructor(game: Phaser.Game, x: number, y: number, group: Phaser.Group, private bulletManager: BulletManager) {
            super(game, x, y, Soldier.SPRITE_KEY, group, true)
 
            this.sprite.animations.add('walk', [2, 3, 4] , 5, true)

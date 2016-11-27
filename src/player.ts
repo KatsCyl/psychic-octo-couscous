@@ -4,10 +4,10 @@ module Game {
 
         public sprite: Phaser.Sprite
 
-        private flipped: boolean = false
+        public flipped: boolean = false
         private cursors: Phaser.CursorKeys
 
-        constructor(game: Phaser.Game, x: number, y: number, animations: any, mainCollisionGroup: Phaser.Group) {
+        constructor(private game: Phaser.Game, x: number, y: number, animations: any, mainCollisionGroup: Phaser.Group) {
             this.sprite = game.add.sprite(x, y, animations)
             mainCollisionGroup.add(this.sprite);
             game.physics.arcade.enableBody(this.sprite)
@@ -38,9 +38,16 @@ module Game {
         public collidesWithBullet(bullet: Bullet): boolean {
            let bSprite = bullet.getSprite();
            let [bulletX, bulletY] = [bSprite.centerX, bSprite.centerY];
+
+           let left = this.sprite.left
+           let right = this.sprite.right
+           if (this.flipped) {
+               left = this.sprite.right
+               right = this.sprite.left
+           }
            
-           return bulletX > this.sprite.x && bulletX < this.sprite.right &&
-                  bulletY > this.sprite.y && bulletY < this.sprite.bottom;
+           return bulletX > (left - this.game.camera.position.x) && bulletX < (right - this.game.camera.position.x) &&
+                  bulletY > this.sprite.top && bulletY < this.sprite.bottom;
         }
 
         private flip () {

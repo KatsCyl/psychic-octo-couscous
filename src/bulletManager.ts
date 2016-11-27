@@ -46,7 +46,7 @@ module Game {
             game.physics.arcade.enableBody(this.sprite);
             let movementDirection = game.physics.arcade.angleBetween(this.sprite, target) * (180 / Math.PI);
 
-            setTimeout(() => {this.isActive = true}, 200);
+            setTimeout(() => {this.isActive = true}, 100);
 
             game.physics.arcade.velocityFromAngle(movementDirection, this.speed, this.sprite.body.velocity);
 
