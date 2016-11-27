@@ -166,7 +166,7 @@ module Game {
         private moveTicker: number = 0
         private shootTicker: number = 0
         private moveTime: number = 110
-        private shootTime: number = 50
+        private shootTime: number = 20
 
         constructor(game: Phaser.Game, x: number, y: number, group: Phaser.Group, private bulletManager: BulletManager) {
            super(game, x, y, Soldier.SPRITE_KEY, group, true)

@@ -35,7 +35,7 @@ module Game {
 
         private sprite: Phaser.Sprite
 
-        private speed: number = 1000
+        private speed: number = 100
 
         private isActive = false
 
@@ -46,7 +46,11 @@ module Game {
             game.physics.arcade.enableBody(this.sprite);
             let movementDirection = game.physics.arcade.angleBetween(this.sprite, target) * (180 / Math.PI);
 
-            setTimeout(() => {this.isActive = true}, 100);
+            this.sprite.anchor = new Phaser.Point(0.5, 0.5);
+
+            this.sprite.scale = Phaser.Point.multiply(new Phaser.Point(0.01, 0.01), Game.pixelartScalingFactorsP)
+
+            setTimeout( () => {this.isActive = true}, 2000);
 
             game.physics.arcade.velocityFromAngle(movementDirection, this.speed, this.sprite.body.velocity);
 

@@ -26,6 +26,7 @@ export class loadState extends Phaser.State {
         this.game.load.image('bg1', 'assets/backgrounds/backgroung1.png')
         this.game.load.image('bg2', 'assets/backgrounds/backgroung2.png')
         this.game.load.image('bg3', 'assets/backgrounds/backgroung3_3.png')
+        this.game.load.image('bullet', 'assets/bullet.png')
 
         this.game.load.image('general', 'assets/general.png')
         this.game.load.image('obstacle1', 'assets/obstacle1.png')
