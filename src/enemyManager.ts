@@ -1,7 +1,7 @@
 module Game{
     export class EnemyManager {
         private readonly spawnRate: number = 0.01
-        private readonly max_spawn: number = 10
+        private readonly max_spawn: number = 0
 
         private enemyList: Enemy[] = []
         private corpseList: Corpse[] = []
@@ -45,8 +45,7 @@ module Game{
                                                       randPos.y, this.enemyGroup))
                      break;
                    case 1:
-                     this.enemyList.push(new Soldier(this.game, randPos.x,
-                                                     randPos.y, this.enemyGroup))
+                     this.enemyList.push(new Soldier(this.game, randPos.x, randPos.y, this.enemyGroup, this.bulletManager))
                      break;
                 } 
             }

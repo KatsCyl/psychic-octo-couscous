@@ -22,6 +22,7 @@ module Game {
         public cameraDx: number = 0
 
         public enemyManager: EnemyManager
+        public bulletManager: BulletManager
 
         preload () {
             this.game.physics.startSystem(Phaser.Physics.ARCADE)
@@ -46,7 +47,7 @@ module Game {
 
             this.collisionGroup.add(this.backgroundWall)
 
-            this.player = new Player(this.game, 100, 300, 'playerAnimations', this.obstacleGroup) 
+            this.player = new Player(this.game, 100, 300, 'playerAnimations', this.collisionGroup, this.obstacleGroup) 
 
             // temporary obstacle
             let tempObstacle = new Obstacle(this.game, 400, 100, 'obstacle1', this.obstacleGroup);
@@ -56,7 +57,8 @@ module Game {
             this.game.camera.follow(this.player.sprite)
             this.game.camera.deadzone = new Phaser.Rectangle(this.game.camera.width * 0.2, 0, this.game.camera.width * 0.6, this.game.camera.height)
             
-            this.enemyManager = new EnemyManager(this.game, this.player, this.obstacleGroup, this.corpseGroup)
+            this.bulletManager = new BulletManager(this.game, this.collisionGroup)
+            this.enemyManager = new EnemyManager(this.game, this.player, this.obstacleGroup, this.bulletManager)
         }
 
         update () {
@@ -65,28 +67,41 @@ module Game {
             this.player.update(this.game);
 
             this.enemyManager.update()
+            this.bulletManager.update()
 
-            this.physics.arcade.collide(this.collisionGroup, this.player.sprite)
-            this.physics.arcade.collide(this.obstacleGroup, undefined, (obj, obj2) => {this.collisionCallback(obj, obj2, this.enemyManager)});
+            this.physics.arcade.collide(this.collisionGroup, undefined, (obj, obj2) => {this.collisionCallback(obj, obj2, this.enemyManager, this.bulletManager)})
+            this.physics.arcade.collide(this.obstacleGroup, undefined, (obj, obj2) => {this.collisionCallback(obj, obj2, this.enemyManager, this.bulletManager)});
             this.background.update(this.cameraDx)
             this.obstacleGroup.sort('bottom', Phaser.Group.SORT_ASCENDING);
         }
 
-        private collisionCallback (obj: any, obj2: any, enemyManager: EnemyManager) {
+        private collisionCallback (obj: any, obj2: any, enemyManager: EnemyManager, bulletManager: BulletManager) {
             // not working
-            if(obj.customParent instanceof Player && obj2.customParent instanceof Enemy) {
-                enemyManager.kill(obj2.customParent)
+            let cusParent1 = obj.customParent
+            let cusParent2 = obj2.customParent
 
-            } else if(obj.customParent instanceof Enemy && obj2.customParent instanceof Player) {
-                enemyManager.kill(obj.customParent)
+            if(cusParent1 instanceof Player && cusParent2 instanceof Enemy) {
+                enemyManager.kill(cusParent2)
 
+            } else if(cusParent1 instanceof Enemy && cusParent2 instanceof Player) {
+                enemyManager.kill(cusParent1)
+
+            } else if(cusParent1 instanceof Bullet && cusParent2 instanceof Enemy) {
+                if (cusParent1.getActive()) {
+                    enemyManager.kill(cusParent2)
+                    bulletManager.kill(cusParent1)
+                }
+            } else if(cusParent1 instanceof Enemy && cusParent2 instanceof Bullet) {
+                if (cusParent2.getActive()) {
+                    enemyManager.kill(cusParent1)
+                    bulletManager.kill(cusParent2)
+                }
             }
         }
 
         render () {
-           /*
-            this.game.debug.body(this.backgroundWall);
-            */
+            this.game.debug.body(this.player.getSprite());
+            this.game.debug.body(this.player.getFeetSprite())
         }
     }
 }

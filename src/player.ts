@@ -3,13 +3,15 @@ module Game {
         private readonly SPEED = 100;
 
         public sprite: Phaser.Sprite
+        public feetCollisionSprite: Phaser.Sprite
 
         private flipped: boolean = false
         private cursors: Phaser.CursorKeys
 
-        constructor(game: Phaser.Game, x: number, y: number, animations: any, group: Phaser.Group) {
+        constructor(game: Phaser.Game, x: number, y: number, animations: any, mainCollisionGroup: Phaser.Group, feetCollisionGroup: Phaser.Group) {
             this.sprite = game.add.sprite(x, y, animations)
-            group.add(this.sprite);
+            mainCollisionGroup.add(this.sprite);
+            game.physics.arcade.enableBody(this.sprite)
             this.sprite.anchor = new Phaser.Point(0.5, 0.5)
             this.sprite.smoothed = false;
 
@@ -17,12 +19,18 @@ module Game {
             this.sprite.animations.add('move', [4, 5, 6, 7, 8], 5, true)
             this.sprite.animations.play('idle')
 
-            game.physics.arcade.enableBody(this.sprite)
+            this.feetCollisionSprite = game.add.sprite(x, y, animations)
+            this.feetCollisionSprite.visible = false
+            feetCollisionGroup.add(this.feetCollisionSprite)
+            game.physics.arcade.enableBody(this.feetCollisionSprite)
+            this.feetCollisionSprite.anchor = new Phaser.Point(0.5, 0.5)
+            this.feetCollisionSprite.body.collideWorldBounds = true;
+            this.feetCollisionSprite.body.setSize(this.sprite.width * 0.25, this.sprite.height * 0.1, this.sprite.width * (0.5 - 0.25/2), this.sprite.height * 0.9)
+            this.sprite.addChild(this.feetCollisionSprite);
 
-            this.sprite.body.checkCollision = true
-            this.sprite.body.collideWorldBounds = true;
-            this.sprite.body.setSize(this.sprite.width * 0.25, this.sprite.height * 0.1, this.sprite.width * (0.5 - 0.25/2), this.sprite.height * 0.9)
+            
 
+            this.feetCollisionSprite.scale = Game.pixelartScalingFactorsP.clone();
             this.sprite.scale = Game.pixelartScalingFactorsP.clone();
 
             this.cursors = game.input.keyboard.createCursorKeys();
@@ -31,11 +39,17 @@ module Game {
         }
 
         public update(game: Phaser.Game) {
+            this.feetCollisionSprite.body.position = Phaser.Point.add(this.sprite.body.position, new Phaser.Point(this.sprite.width * (0.5 - 0.25/2), this.sprite.height * 0.9))
+
             this.handleControls()
         }
 
         public getSprite() {
             return this.sprite;
+        }
+
+        public getFeetSprite() {
+            return this.feetCollisionSprite
         }
 
         private flip () {
