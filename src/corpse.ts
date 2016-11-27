@@ -4,8 +4,10 @@ module Game {
 
         constructor(game: Phaser.Game, x: number, y: number, image: string, group: Phaser.Group) {
             this.sprite = game.add.sprite(x, y, image)
+            this.sprite.y -= this.sprite.height / 2
             group.add(this.sprite)
             this.sprite.smoothed = false;
+            this.sprite.scale = Game.pixelartScalingFactorsP
 
             game.physics.arcade.enableBody(this.sprite)
 
