@@ -1,0 +1,14 @@
+{
+  "name": "psychic-octo-couscos",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-coffeelint": "latest",
+    "grunt-html": "latest",
+    "grunt-contrib-coffee": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-contrib-copy": "latest"
+  }
+}
+
