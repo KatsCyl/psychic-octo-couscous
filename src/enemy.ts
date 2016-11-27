@@ -157,7 +157,7 @@ module Game {
         }
 
         attack(player: Player): void {
-           console.log("ATTAAACCCKKK!");
+           //console.log("ATTAAACCCKKK!");
            return;
         }
 

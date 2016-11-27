@@ -9,10 +9,13 @@ module Game{
         private enemyList: Enemy[] = []
         public enemyGroup: Phaser.Group
 
+        public bodyGroup: Phaser.Group
+
         constructor(game: Phaser.Game, player: Player, group: Phaser.Group) {
             this.game = game
             this.player = player
             this.enemyGroup = group
+            this.bodyGroup = new Phaser.Group(game)
         }
 
         update () {
@@ -30,7 +33,9 @@ module Game{
         }
 
         public kill (enemy: Enemy) {
-           enemy.getSprite().kill()
+            let sprite = enemy.getSprite()
+            sprite.kill()
+            new Body(this.game, sprite.body.position, sprite.key + "-dead", this.bodyGroup)
         }
 
         private trySpawn(){
