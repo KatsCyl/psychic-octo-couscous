@@ -93,6 +93,7 @@ module Game {
         abstract move(player: Player): void
         abstract attack(player: Player): void
         abstract getType(): Enemy.Type
+        abstract getCorpseSpriteKey(): string
     }
 
    export class Civilian extends Enemy {
@@ -133,6 +134,10 @@ module Game {
 
         getType(): Enemy.Type {
            return Enemy.Type.CIVILIAN
+        }
+
+        getCorpseSpriteKey(): string {
+           return Civilian.CORPSE_SPRITE_KEY;
         }
     }
 
@@ -183,6 +188,10 @@ module Game {
 
         getType(): Enemy.Type {
            return Enemy.Type.SOLDIER;
+        }
+
+        getCorpseSpriteKey(): string {
+           return Soldier.CORPSE_SPRITE_KEY;
         }
     }
 }

@@ -58,7 +58,7 @@ module Game {
             this.game.camera.deadzone = new Phaser.Rectangle(this.game.camera.width * 0.2, 0, this.game.camera.width * 0.6, this.game.camera.height)
             
             this.bulletManager = new BulletManager(this.game, this.collisionGroup)
-            this.enemyManager = new EnemyManager(this.game, this.player, this.obstacleGroup, this.bulletManager)
+            this.enemyManager = new EnemyManager(this.game, this.player, this.obstacleGroup, this.corpseGroup, this.bulletManager)
         }
 
         update () {
