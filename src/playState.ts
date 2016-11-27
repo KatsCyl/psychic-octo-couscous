@@ -77,6 +77,7 @@ module Game {
             for (let bullet of bullets) {
                if (this.player.collidesWithBullet(bullet)) {
                   console.log("DIED");
+                  this.player.kill(this.enemyManager.getCorpseList());
                }
 
                for (let enemy of enemies) {

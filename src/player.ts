@@ -50,6 +50,34 @@ module Game {
                   bulletY > this.sprite.top && bulletY < this.sprite.bottom;
         }
 
+        public kill(corpseList: Corpse[]) {
+            let myCoords = this.sprite.position;
+            let closest: Corpse = null;
+            let closestDistance;
+
+            for (let corpse of corpseList) {
+               if (!closest) {
+                  closest = corpse;
+                  closestDistance = Phaser.Point.distance(closest.getSprite().position, myCoords);
+               } else {
+                  let corpseCoords = corpse.getSprite().position;
+                  let distance = Phaser.Point.distance(myCoords, corpseCoords) 
+                  if (distance < closestDistance) {
+                     closestDistance = distance;
+                     closest = corpse;
+                  }
+               }
+            }
+
+            if (!closest) {
+               this.sprite.kill(); 
+            } else {
+               this.sprite.animation.stop();
+               let movementDirection = this.game.physics.arcade.angleBetween(this.sprite, closest.getSprite()) * (180 / Math.PI);
+               this.game.physics.arcade.velocityFromAngle(movementDirection, 300, this.sprite.body.velocity);
+            } 
+        }
+
         private flip () {
             this.sprite.scale.x *= -1
         }

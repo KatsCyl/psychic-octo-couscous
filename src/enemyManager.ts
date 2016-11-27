@@ -60,5 +60,9 @@ module Game{
         public getEnemyList() {
             return this.enemyList;
         }
+
+        public getCorpseList() {
+            return this.corpseList;
+        }
     }
 }
