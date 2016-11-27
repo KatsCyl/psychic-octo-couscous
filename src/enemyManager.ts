@@ -22,6 +22,12 @@ module Game{
                     this.enemyList[i].update(this.player)
                 }
             }
+
+            for (let i = 0; i < this.corpseList.length; i++) {
+                if (this.corpseList[i].getSprite().alive == false) {
+                    this.corpseList.splice(i, 1);
+                }             
+            }
         }
 
         public kill(enemy: Enemy) {

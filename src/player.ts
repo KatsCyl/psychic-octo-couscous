@@ -5,6 +5,11 @@ module Game {
         public sprite: Phaser.Sprite
 
         public flipped: boolean = false
+
+        public dead: boolean = false
+        public invulnerable: boolean = false;
+        public targetCorpse: Corpse = null;
+
         private cursors: Phaser.CursorKeys
 
         constructor(private game: Phaser.Game, x: number, y: number, animations: any, mainCollisionGroup: Phaser.Group) {
@@ -28,7 +33,19 @@ module Game {
         }
 
         public update(game: Phaser.Game) {
-            this.handleControls()
+            if (this.dead) {
+               if (Phaser.Point.distance(this.sprite.position, this.targetCorpse.getSprite().position) < 50) {
+                  console.log("reached corpse");
+                  this.dead = false;
+                  this.invulnerable = true;
+                  setTimeout(() => { this.invulnerable = false; }, 1000);
+
+                  this.targetCorpse.getSprite().kill();
+                  this.targetCorpse = null;
+               }
+            } else {
+               this.handleControls()
+            }
         }
 
         public getSprite() {
@@ -36,6 +53,8 @@ module Game {
         }
 
         public collidesWithBullet(bullet: Bullet): boolean {
+           if (this.dead || this.invulnerable) { return false; }
+
            let bSprite = bullet.getSprite();
            let [bulletX, bulletY] = [bSprite.centerX, bSprite.centerY];
 
@@ -51,6 +70,8 @@ module Game {
         }
 
         public kill(corpseList: Corpse[]) {
+            this.dead = true;
+
             let myCoords = this.sprite.position;
             let closest: Corpse = null;
             let closestDistance;
@@ -70,11 +91,16 @@ module Game {
             }
 
             if (!closest) {
+               this.dead = false;
                this.sprite.kill(); 
             } else {
-               this.sprite.animation.stop();
+               this.targetCorpse = closest;
+               this.sprite.animations.stop();
+               this.game.physics.arcade.moveToObject(this.sprite, closest.getSprite().position, 300)
+               /*
                let movementDirection = this.game.physics.arcade.angleBetween(this.sprite, closest.getSprite()) * (180 / Math.PI);
                this.game.physics.arcade.velocityFromAngle(movementDirection, 300, this.sprite.body.velocity);
+               */
             } 
         }
 
