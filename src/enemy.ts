@@ -130,12 +130,15 @@ module Game {
     export class Soldier extends Enemy {
         public static readonly SPRITE_KEY = "soldier";
 
-        private ticker: number = 0
+        private moveTicker: number = 0
+        private shootTicker: number = 0
+        private moveTime: number = 110
+        private shootTime: number = 50
 
-        constructor(private game: Phaser.Game, x: number, y: number, group: Phaser.Group) {
+        constructor(private game: Phaser.Game, x: number, y: number, group: Phaser.Group, private bulletManager: BulletManager) {
            super(game, x, y, Soldier.SPRITE_KEY, group, true)
 
-           this.sprite.animations.add('walk', undefined , 5, true)
+           this.sprite.animations.add('walk', [2, 3, 4] , 5, true)
            this.sprite.animations.play('walk')
 
 
@@ -145,19 +148,26 @@ module Game {
         }
 
         move(player: Player): void {
-           if (this.ticker % 100 === 0) {
+           if (this.moveTicker % this.moveTime === 0) {
               // change direction
               let movementDirection = this.game.physics.arcade.angleBetween(this.sprite, player.getSprite()) * (180 / Math.PI);
 
               this.game.physics.arcade.velocityFromAngle(movementDirection, this.speed, this.sprite.body.velocity);
-              this.ticker = 0;
+              this.moveTicker = 0
+              
            }
 
-           this.ticker++;
+           this.moveTicker++;
         }
 
         attack(player: Player): void {
-           console.log("ATTAAACCCKKK!");
+            if (this.shootTicker % this.shootTime === 0) {
+                this.bulletManager.createBullet(this.sprite.position, player.getSprite())
+                this.shootTicker = 0
+            }
+
+            this.shootTicker++;
+
            return;
         }
 

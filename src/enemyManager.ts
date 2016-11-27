@@ -1,7 +1,7 @@
 module Game{
     export class EnemyManager{
         private readonly spawnRate: number = 0.01
-        private readonly max_spawn: number = 10
+        private readonly max_spawn: number = 0
 
         private game: Phaser.Game
         private player: Player
@@ -9,7 +9,7 @@ module Game{
         private enemyList: Enemy[] = []
         public enemyGroup: Phaser.Group
 
-        constructor(game: Phaser.Game, player: Player, group: Phaser.Group) {
+        constructor(game: Phaser.Game, player: Player, group: Phaser.Group, private bulletManager: BulletManager) {
             this.game = game
             this.player = player
             this.enemyGroup = group
@@ -44,7 +44,7 @@ module Game{
                      this.enemyList.push(new Civilian(this.game, randPos.x, randPos.y, this.enemyGroup))
                      break;
                    case 1:
-                     this.enemyList.push(new Soldier(this.game, randPos.x, randPos.y, this.enemyGroup))
+                     this.enemyList.push(new Soldier(this.game, randPos.x, randPos.y, this.enemyGroup, this.bulletManager))
                      break;
                 } 
             }
