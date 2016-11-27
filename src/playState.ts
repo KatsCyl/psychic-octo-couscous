@@ -5,6 +5,7 @@ module Game {
         private backgroundGroup: Phaser.Group
         private floorGroup: Phaser.Group
         private obstacleGroup: Phaser.Group
+        private corpseGroup: Phaser.Group
 
         // collision group
         private collisionGroup: Phaser.Group
@@ -28,15 +29,15 @@ module Game {
         }
 
         create () {
-
             this.floorGroup = new Phaser.Group(this.game)
             this.backgroundGroup = new Phaser.Group(this.game)
+            this.corpseGroup = new Phaser.Group(this.game);
             this.obstacleGroup = new Phaser.Group(this.game)
             this.collisionGroup = new Phaser.Group(this.game)
 
             this.background = new ParallaxBackground(this.game, 'bg1', 'bg2', 'bg3', this.backgroundGroup)
             this.backgroundWall = this.game.add.sprite(0, 0, 'invisible')
-            this.backgroundWall.visible=false
+            this.backgroundWall.visible = false
             this.backgroundWall.width = this.game.camera.width
             this.backgroundWall.height = this.background.height
 
@@ -55,7 +56,7 @@ module Game {
             this.game.camera.follow(this.player.sprite)
             this.game.camera.deadzone = new Phaser.Rectangle(this.game.camera.width * 0.2, 0, this.game.camera.width * 0.6, this.game.camera.height)
             
-            this.enemyManager = new EnemyManager(this.game, this.player, this.obstacleGroup)
+            this.enemyManager = new EnemyManager(this.game, this.player, this.obstacleGroup, this.corpseGroup)
 
         }
 

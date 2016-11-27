@@ -20,7 +20,7 @@ module Game {
 
         protected orientation: boolean
 
-        constructor(game: Phaser.Game, x: number, y: number, spriteKey: string, group: Phaser.Group, orientation: boolean) {
+        constructor(protected game: Phaser.Game, x: number, y: number, spriteKey: string, group: Phaser.Group, orientation: boolean) {
             this.orientation = orientation
             this.sprite = game.add.sprite(x, y, spriteKey)
             group.add(this.sprite)
@@ -82,13 +82,20 @@ module Game {
             this.flip();
         }
 
+        getCorpse(group: Phaser.Group): Corpse {
+           return new Corpse(this.game, this.sprite.x, this.sprite.y,
+                             this.getCorpseSpriteKey(), group);
+        }
+
         abstract move(player: Player): void
         abstract attack(player: Player): void
         abstract getType(): Enemy.Type
+        abstract getCorpseSpriteKey(): string
     }
 
    export class Civilian extends Enemy {
         public static readonly SPRITE_KEY = "fox";
+        public static readonly CORPSE_SPRITE_KEY = "fox_corpse"
 
         private ticker: number = 0
         private direction = Enemy.Direction.LEFT
@@ -125,10 +132,15 @@ module Game {
         getType(): Enemy.Type {
            return Enemy.Type.CIVILIAN
         }
+
+        getCorpseSpriteKey(): string {
+           return Civilian.CORPSE_SPRITE_KEY;
+        }
     }
 
     export class Soldier extends Enemy {
         public static readonly SPRITE_KEY = "soldier";
+        public static readonly CORPSE_SPRITE_KEY = "soldier_corpse";
 
         private ticker: number = 0
 
@@ -163,6 +175,10 @@ module Game {
 
         getType(): Enemy.Type {
            return Enemy.Type.SOLDIER;
+        }
+
+        getCorpseSpriteKey(): string {
+           return Soldier.CORPSE_SPRITE_KEY;
         }
     }
 }
