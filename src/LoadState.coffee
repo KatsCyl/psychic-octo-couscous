@@ -1,13 +1,11 @@
 class LoadState extends Phaser.State
 
-  @loaded
-  @loadBar
-
-  constructor: -> super
-
-  preload: ->
+  constructor: ->
+    super
     @loaded = false
     @loadBar = new LoadBar @game
+
+  preload: ->
     @game.load.onLoadComplete.add => @loaded = true
 
   create: ->
@@ -18,10 +16,26 @@ class LoadState extends Phaser.State
       @loadBar.update @game.load.progress
 
     if @loaded
-      @loadBar.update 100 #@game.state.start('menu')
+      @game.state.start 'menu'
 
 
   loadAssets: ->
+
+
+    @game.load.spritesheet MenuState.PLAY_BUTTON_RESOURCE
+                         , "assets/buttons/play_sprite_sheet.png"
+                         , 50
+                         , 50
+
+    @game.load.spritesheet MenuState.CREDITS_BUTTON_RESOURCE
+                         , "assets/buttons/play_sprite_sheet.png"
+                         , 50
+                         , 50
+
+    @game.load.image MenuState.MENU_BG_RESOURCE
+                   , "assets/backgrounds/menubg.jpg"
+
+
     @game.load.image 'invisible'
                    , 'assets/invisible.png'
 
@@ -57,20 +71,7 @@ class LoadState extends Phaser.State
 
     @game.load.start()
 
-
-
-
-
-
 class LoadBar
-
-  @game
-
-  @screenMiddle
-  @barBg
-  @bar
-  @maxWidth
-  @percentage
 
   constructor: (game) ->
     @game = game
@@ -88,12 +89,6 @@ class LoadBar
                   , @maxWidth
                   , 15
 
-    @bar.beginFill 0xff3300
-    @bar.drawRect @screenMiddle.x - @maxWidth / 2
-                , @screenMiddle.y
-                , ( @percentage / 100 ) * @maxWidth
-                , 13
-    @bar.endFill()
 
   update: (percentage) ->
     @bar.clear()
