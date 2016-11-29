@@ -5,12 +5,14 @@ class Main
     @height = window.innerHeight
 
     @game = new Phaser.Game @width, @height, Phaser.AUTO, 'gameDiv'
+
+    @game.state.add 'boot', new BootState, false
     @game.state.add 'load', new LoadState, false
-    @game.state.add('menu', new MenuState, false)
-    #@game.state.add('play', new PlayState, false)
+    @game.state.add 'menu', new MenuState, false
+    @game.state.add 'play', new PlayState, false
 
   start: ->
-    @game.state.start 'load', true
+    @game.state.start 'boot'
 
 
 window.onload = () ->

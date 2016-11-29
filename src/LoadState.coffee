@@ -3,9 +3,10 @@ class LoadState extends Phaser.State
   constructor: ->
     super
     @loaded = false
-    @loadBar = new LoadBar @game
+
 
   preload: ->
+    @loadBar = new LoadBar @game
     @game.load.onLoadComplete.add => @loaded = true
 
   create: ->
