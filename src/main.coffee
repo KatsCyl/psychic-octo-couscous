@@ -1,8 +1,10 @@
 class Main
 
+  @PIXEL_SCALING_FACTOR: new Phaser.Point 6, 6
+
   constructor: ->
-    @width = window.innerWidth
-    @height = window.innerHeight
+    @width = 1920
+    @height = 1080
 
     @game = new Phaser.Game @width, @height, Phaser.AUTO, 'gameDiv'
 

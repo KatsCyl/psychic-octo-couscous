@@ -4,7 +4,7 @@ class Player
   constructor:
     (@game, x, y, graphicKey, footCollisionGroup, hitBoxCollisionGroup) ->
 
-      @FPS = 10
+      @FPS = 5
 
       @mainSprite = @game.add.sprite x, y, graphicKey, 0, footCollisionGroup
       @mainSprite.anchor.set 0.5
@@ -12,8 +12,8 @@ class Player
       @game.physics.arcade.enableBody @mainSprite
       @mainSprite.smoothed = false
 
-      @mainSprite.animations.add 'idle', [0, 1, 2, 3], 5, true
-      @mainSprite.animations.add 'move', [4, 5, 6, 7, 8], 5, true
+      @mainSprite.animations.add 'idle', [0, 1, 2, 3], @FPS, true
+      @mainSprite.animations.add 'move', [4, 5, 6, 7, 8], @FPS, true
       @mainSprite.animations.play 'idle', @FPS, true
 
       @mainSprite.body.collideWorldBounds = true
@@ -26,7 +26,9 @@ class Player
       @hitBoxSprite = @game.add.sprite 0, 0, graphicKey, 0, hitBoxCollisionGroup
       @hitBoxSprite.anchor.set 0.5
       @hitBoxSprite.visible = false
+
       @mainSprite.addChild @hitBoxSprite
+      @mainSprite.scale = Main.PIXEL_SCALING_FACTOR
 
 
       @cursors = @game.input.keyboard.createCursorKeys()

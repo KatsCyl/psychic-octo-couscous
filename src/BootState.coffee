@@ -4,6 +4,7 @@ class BootState extends Phaser.State
 
   preload: ->
     @game.time.advancedTiming = true
+    @game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL
 
   create: ->
     @game.state.start 'load'

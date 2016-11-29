@@ -14,8 +14,9 @@ class ParallaxBackground
     group.add @bg2
     group.add @bg3
 
+
     group.setAll 'smoothed', false
-    group.setAll 'tileScale.y', (actualHeight / (1080/3))
+    group.setAll 'tileScale.y', (actualHeight / (game.height / 3))
 
   update: (camPos) ->
     @bg1.position.x = camPos
