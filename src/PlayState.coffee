@@ -47,8 +47,17 @@ class PlayState extends Phaser.State
                          , @game.camera.width * 0.6
                          , @game.camera.height
 
+    # Testing hitbox
 
-  update: ->
-    @player.update()
+    @hitboxTestSprite =
+      @game.add.sprite 0, 0, 'invisible', 0, @bulletCollidablesGroup
+    @hitboxTestSprite.visible = false
+    @hitboxTestSprite.height = @parallaxBackground.bg1.height
+    @hitboxTestSprite.width = @game.world.width
+    @game.physics.arcade.enable @hitboxTestSprite
+    @hitboxTestSprite.body?.immovable = true
+
+
+  update: ()->
+    @player.update(@collidablesGroup, @bulletCollidablesGroup)
     @parallaxBackground.update(@game.camera.position.x)
-    @game.physics.arcade.collide @collidablesGroup
