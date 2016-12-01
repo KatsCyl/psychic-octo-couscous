@@ -1,8 +1,8 @@
 class Player extends MovingGameEntity
 
   constructor:
-    (game, x, y, graphicKey, footCollisionGroup, hitBoxCollisionGroup) ->
-      super game, x, y, graphicKey, footCollisionGroup, hitBoxCollisionGroup
+    (game, x, y, graphicKey, footCollisionGroup) ->
+      super game, x, y, graphicKey, footCollisionGroup
 
       @FPS = 5
 
