@@ -34,10 +34,6 @@ class MovingGameEntity
                          , (- @mainSprite.width / 2 + @hitBoxSprite.width / 2)
                          , (- @mainSprite.height/ 2 + @hitBoxSprite.height / 2)
 
-      console.log @mainSprite.body.center
-      console.log @mainSprite.width, @hitBoxSprite.width
-      console.log @hitBoxSprite.body.center
-
 
   update: (footCollisionGroup, hitBoxCollisionGroup) ->
 

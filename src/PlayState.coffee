@@ -28,7 +28,6 @@ class PlayState extends Phaser.State
     @backgroundWall.visible = false
     @backgroundWall.height = @parallaxBackground.bg1.height
     @backgroundWall.width = @game.world.width
-    console.log @backgroundWall.height
     @game.physics.arcade.enable @backgroundWall
     @backgroundWall.body?.immovable = true
 
@@ -47,17 +46,28 @@ class PlayState extends Phaser.State
                          , @game.camera.width * 0.6
                          , @game.camera.height
 
-    # Testing hitbox
+    # Creating rectangle to represent enemy spawn area
 
-    @hitboxTestSprite =
-      @game.add.sprite 0, 0, 'invisible', 0, @bulletCollidablesGroup
-    @hitboxTestSprite.visible = false
-    @hitboxTestSprite.height = @parallaxBackground.bg1.height
-    @hitboxTestSprite.width = @game.world.width
-    @game.physics.arcade.enable @hitboxTestSprite
-    @hitboxTestSprite.body?.immovable = true
+    @spawnArea =
+      new Phaser.Rectangle @game.camera.x
+                         , @backgroundWall.bottom
+                         , @game.camera.width
+                         , @game.camera.height - @backgroundWall.bottom
+
+    # Creating enemyManager
+
+    @enemyManager =
+      new EnemyManager @game, @collidablesGroup
 
 
   update: ()->
+    # Updating spawnArea to stay in camera
+    @spawnArea.x = @game.camera.x
+
     @player.update(@collidablesGroup, @bulletCollidablesGroup)
+
+    @enemyManager.update @player, @spawnArea
+
     @parallaxBackground.update(@game.camera.position.x)
+
+

@@ -10,8 +10,8 @@ class Enemy extends MovingGameEntity
     if (@health <= 0)
       @kill()
     else
-      @move player
-      @attack player
+      ((p) => @move p) player
+      ((p) => @attack p) player
 
   move: (player) ->
     console.log 'enemy move undefined'
@@ -20,8 +20,8 @@ class Enemy extends MovingGameEntity
     console.log 'enemy attack undefined'
 
   hitBoxCallback: (sprite1, sprite2) ->
-    if sprite2.damage?
-      @health -= sprite2.damage
+    #if sprite2.damage?
+    @health -= sprite2.damage
     console.log 'Enemy hit'
 
   kill: ->
