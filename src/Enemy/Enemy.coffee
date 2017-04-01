@@ -1,8 +1,8 @@
-class Enemy extends MovingGameEntity
+class Enemy extends GameEntity
 
   constructor:
     (@game, x, y, graphicsKey, footCollisionGroup, @health) ->
-      super @game, x, y, graphicsKey, footCollisionGroup
+      super @game, x, y, graphicsKey, true, footCollisionGroup
       @dead = false
 
   update: (player, footCollisionGroup, hitBoxCollisionGroup) ->

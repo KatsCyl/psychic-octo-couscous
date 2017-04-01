@@ -1,4 +1,4 @@
-class MovingGameEntity
+class GameEntity
 
 
   constructor:
@@ -6,12 +6,14 @@ class MovingGameEntity
     , x
     , y
     , graphicKey
+    , movable
     , footCollisionGroup) ->
 
       @mainSprite = @game.add.sprite x, y, graphicKey, 0, footCollisionGroup
       @mainSprite.anchor.set 0.5
 
       @game.physics.arcade.enableBody @mainSprite
+      @mainSprite.immovable = not movable
       @mainSprite.smoothed = false
 
       @mainSprite.body.collideWorldBounds = true
@@ -33,6 +35,12 @@ class MovingGameEntity
       @hitBoxSprite.body.setSize @mainSprite.width, @mainSprite.height
                          , (- @mainSprite.width / 2 + @hitBoxSprite.width / 2)
                          , (- @mainSprite.height/ 2 + @hitBoxSprite.height / 2)
+
+      # Set sprites to contain information of the parent
+
+      (() =>
+        @mainSprite.customParent = this
+        @hitBoxSprite.customParent = this)()
 
 
   update: (footCollisionGroup, hitBoxCollisionGroup) ->
